@@ -1,0 +1,38 @@
+title: settings
+type: object
+properties:
+  surveyCode:
+    type: string
+  projectName:
+    type: string
+  allowMobileDevices:
+    type: boolean
+  version:
+    type: number
+  showBrand:
+    type: boolean
+  hideQuestionNum:
+    type: number
+  hideProjectName:
+    type: number
+  startQuestTextHidden:
+    type: number
+  endQuestTextHidden:
+    type: number
+  collectorName:
+    type: string
+  collectorId:
+    type: number
+  theme:
+    type: string
+  design:
+    type: object
+  generatedCSS:
+    type: string
+  translations:
+    type: array
+    items: {}
+  enableNonUniqueRespondents:
+    type: number
+  collectorStatus:
+    type: number

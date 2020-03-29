@@ -1,0 +1,56 @@
+title: question
+type: object
+properties:
+  id:
+    type: number
+  order:
+    type: number
+  sectionId:
+    type: number
+  questItemType:
+    type: number
+  code:
+    type: string
+  cssContext:
+    type: string
+  name:
+    type: string
+  questionType:
+    type: number
+  isRequired:
+    type: number
+  minRangeSize:
+    type: number
+  filterSectionConditionsBlock:
+    $ref: ./question-filter.v1.yaml
+  filterConditionsBlock:
+    $ref: ./question-filter.v1.yaml
+  alternatives:
+    type: array
+    items: {}
+  folderGuid:
+    type: string
+  neurolabTrackers:
+    type:
+      - number
+      - array
+    description: Только для нейровопросов
+    items: {}
+  eyeTrackingWebSiteUrl:
+    type: string
+    description: Только для нейровопросов
+  eyeTrackingWebSiteObjective:
+    type: string
+    description: Только для нейровопросов
+  limitTimeout:
+    type: number
+    minimum: 15
+    maximum: 180
+    description: Только для нейровопрос. Значение в милисекудах
+required:
+  - id
+  - order
+  - questItemType
+  - code
+  - cssContext
+  - name

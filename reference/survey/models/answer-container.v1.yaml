@@ -1,0 +1,5 @@
+title: answer-container
+type: object
+properties:
+  id:
+    type: string

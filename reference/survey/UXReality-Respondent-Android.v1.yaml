@@ -1,0 +1,369 @@
+openapi: 3.0.0
+info:
+  title: UXReality Respondent Android
+  version: '1.0'
+  contact:
+    name: Sergey
+  description: Описание когда-то будет
+servers:
+  - url: 'https://test3.2futureresearch.com'
+    description: BASE_URL
+paths:
+  /GetProjectInfo:
+    get:
+      summary: GET Project Info
+      tags:
+        - Survey
+      operationId: GET_project_info
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: survey
+          required: true
+          description: Survey code
+      description: |-
+        Используется для валидации survey code.
+        - Если код валидный возврщается результат
+        - Если не валидный 404 ошибка
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./models/project-info.v1.yaml
+              examples:
+                application/json:
+                  value:
+                    $ref: ./examples/project-info.v1.yaml
+        '404':
+          description: Если код не валидный
+  /GetQuestMetadata:
+    get:
+      summary: Get Quest Info
+      tags:
+        - Survey
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./models/quest-metadata.v1.yaml
+              examples:
+                application/json:
+                  value:
+                    $ref: ./examples/quest-metadata.v1.yaml
+      operationId: get-GetQuestMetadata
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: survey
+          required: true
+          description: Код анкеты(survey code). Вводит пользователь
+        - schema:
+            type: number
+            default: 1
+            enum:
+              - 1
+          in: query
+          name: create_contact
+          required: true
+          description: Указывает что нужо создать нового респондента в системе
+        - schema:
+            type: string
+            default: json
+            enum:
+              - json
+          in: query
+          name: data-format
+          required: true
+          description: Возвращаемый формат данных
+        - schema:
+            type: string
+          in: query
+          name: deviceId
+          description: Уникальный идентификатор устройства
+  /CheckRespondentsStatus.ashx:
+    post:
+      summary: Check Respondent
+      operationId: checkRespondent
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  res:
+                    type: string
+                  checkResult:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        RespondentId:
+                          type: number
+                          description: Same respondent id as requested in requestBody
+                        Result:
+                          type: number
+                          default: 1
+                          enum:
+                            - 0
+                            - 1
+                          description: '0 - нет, 1 - есть'
+                      required:
+                        - RespondentId
+                        - Result
+                required:
+                  - res
+                  - checkResult
+              examples:
+                application/json:
+                  value:
+                    res: 1
+                    checkResult:
+                      - RespondentId: 239036190
+                        Result: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                Respondents:
+                  type: array
+                  description: Array of respondents ids
+                  uniqueItems: true
+                  items:
+                    type: number
+              required:
+                - Respondents
+      description: Проверяет есть ли респондент(ы) в системе.
+      tags:
+        - Synchronization
+  /PostRespondentAnswer.cmd:
+    post:
+      summary: Post Respondent Answers
+      operationId: postRespondentAnswer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  res:
+                    type: number
+                  errorCode:
+                    type: number
+                    enum:
+                      - 410
+                    description: Error code 410 - already sent data
+                required:
+                  - res
+              examples:
+                application/json:
+                  value:
+                    res: 1
+                Error:
+                  value:
+                    res: 0
+                    errorCode: 410
+      description: Send respondent answer on simple quesions
+      requestBody:
+        content:
+          form:
+            schema:
+              type: object
+              properties:
+                uid:
+                  type: number
+                  description: Respondet id
+                surveyCode:
+                  type: string
+                answers:
+                  type: string
+                startDate:
+                  type: number
+                  description: Timestamp in ms
+                lastAnswer:
+                  type: number
+                  description: Timestamp in ms
+                status:
+                  type: number
+                  enum:
+                    - 2
+              required:
+                - uid
+                - surveyCode
+                - answers
+                - startDate
+                - lastAnswer
+                - status
+          application/json:
+            schema:
+              type: object
+              properties:
+                '':
+                  type: string
+        description: ''
+      tags:
+        - Synchronization
+  /GetUploadTokens.ashx:
+    post:
+      summary: Get upload endpoint
+      operationId: getUploadTokens
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  res:
+                    type: string
+                  files:
+                    type: array
+                    items: {}
+              examples:
+                application/json:
+                  value:
+                    res: '1'
+                    files:
+                      - OriginalFileName: '[VID_20200226_093838.mp4'
+                        UploadUrl: 'https://s3.amazonaws.com/cooltool.static/ProjectContact/ProjectContact_239086446/WebEyeTracker/q_239080159/_VID_20200226_093838.mp4?AWSAccessKeyId=AKIAJK2OK5NFLD3C3BPQ&ContentType=video%2Fmp4&Expires=1585508220&Signature=PGRAwv8dEo7hRrL2UtcIBNSTmcU%3D'
+                      - OriginalFileName: "\r\n123.mp4"
+                        UploadUrl: 'https://s3.amazonaws.com/cooltool.static/ProjectContact/ProjectContact_239086446/WebEyeTracker/q_239080159/_123.mp4?AWSAccessKeyId=AKIAJK2OK5NFLD3C3BPQ&ContentType=video%2Fmp4&Expires=1585508220&Signature=CQejevlU3wC5RMNpNhuLum8P384%3D'
+                      - OriginalFileName: "\r\ntest.mp4]"
+                        UploadUrl: 'https://s3.amazonaws.com/cooltool.static/ProjectContact/ProjectContact_239086446/WebEyeTracker/q_239080159/_test.mp4%5D?AWSAccessKeyId=AKIAJK2OK5NFLD3C3BPQ&ContentType=application%2Foctet-stream&Expires=1585508220&Signature=mel06tEUiL7Lt1P8DsGtcOyij4Y%3D'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                questionid:
+                  type: number
+                respondentid:
+                  type: number
+                dataType:
+                  type: string
+                  enum:
+                    - responseData
+                files:
+                  type:
+                    - string
+                    - array
+                  items:
+                    type: string
+                ignoreMimeType:
+                  type: boolean
+                  enum:
+                    - 'false'
+                webcamTracker:
+                  type: boolean
+                  enum:
+                    - 'true'
+                screenShotTracker:
+                  type: boolean
+                  enum:
+                    - 'true'
+                webEyeTracker:
+                  type: boolean
+                  enum:
+                    - 'true'
+              required:
+                - questionid
+                - respondentid
+                - dataType
+                - files
+                - ignoreMimeType
+            examples:
+              application/json:
+                value:
+                  res: '1'
+                  files:
+                    - OriginalFileName: '[VID_20200226_093838.mp4'
+                      UploadUrl: 'https://s3.amazonaws.com/cooltool.static/ProjectContact/ProjectContact_239086446/WebEyeTracker/q_239080159/_VID_20200226_093838.mp4?AWSAccessKeyId=AKIAJK2OK5NFLD3C3BPQ&ContentType=video%2Fmp4&Expires=1585508220&Signature=PGRAwv8dEo7hRrL2UtcIBNSTmcU%3D'
+                    - OriginalFileName: "\r\n123.mp4"
+                      UploadUrl: 'https://s3.amazonaws.com/cooltool.static/ProjectContact/ProjectContact_239086446/WebEyeTracker/q_239080159/_123.mp4?AWSAccessKeyId=AKIAJK2OK5NFLD3C3BPQ&ContentType=video%2Fmp4&Expires=1585508220&Signature=CQejevlU3wC5RMNpNhuLum8P384%3D'
+                    - OriginalFileName: "\r\ntest.mp4]"
+                      UploadUrl: 'https://s3.amazonaws.com/cooltool.static/ProjectContact/ProjectContact_239086446/WebEyeTracker/q_239080159/_test.mp4%5D?AWSAccessKeyId=AKIAJK2OK5NFLD3C3BPQ&ContentType=application%2Foctet-stream&Expires=1585508220&Signature=mel06tEUiL7Lt1P8DsGtcOyij4Y%3D'
+      tags:
+        - Synchronization
+  /DataUploaded.ashx:
+    post:
+      summary: Set data uploaded
+      operationId: dataUploaded
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  res:
+                    type: number
+                    enum:
+                      - '0'
+                      - '1'
+                    description: Если res=1 - все ок. В другом случае ошибка
+                  errormessage:
+                    type: string
+                  fullerrormessage:
+                    type: string
+                required:
+                  - res
+              examples:
+                application/json:
+                  value:
+                    res: 1
+                Error:
+                  value:
+                    res: 0
+                    errormessage: Data type is not presented or not supported
+                    fullerrormessage: "Exception: Data type is not presented or not supported\r\n   at CoolToolSite.DataUploaded.ProcessRequest(HttpContext context)\r\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dataType:
+                  type: string
+                  enum:
+                    - responseData
+                filePath:
+                  type: string
+                files:
+                  type: string
+                questionid:
+                  type: number
+                respondentid:
+                  type: number
+                webcamTracker:
+                  type: boolean
+                  enum:
+                    - 'true'
+            examples:
+              application/json:
+                value:
+                  dataType: responseData
+                  filePath: 'https://s3.amazonaws.com/cooltool.static/ProjectContactAnswer/ProjectContactAnswer_239063126/WebCamCaptures/index.json'
+                  files: wet-job-info.json
+                  questionid: 238285786
+                  respondentid: 239063064
+                  webcamTracker: true
+      tags:
+        - Synchronization
+components:
+  schemas: {}
+  securitySchemes: {}
