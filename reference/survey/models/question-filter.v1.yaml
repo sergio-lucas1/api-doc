@@ -1,0 +1,23 @@
+title: question-filter
+type: object
+properties:
+  operator:
+    type: string
+    enum:
+      - or
+      - and
+  conditionBlocks:
+    type: array
+    items:
+      type: object
+      properties:
+        operator:
+          type: string
+          enum:
+            - or
+            - and
+      required:
+        - operator
+required:
+  - operator
+  - conditionBlocks

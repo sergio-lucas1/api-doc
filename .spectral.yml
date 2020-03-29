@@ -1,0 +1,4 @@
+extends: 'spectral:oas'
+rules:
+  oas2-schema: false
+  no-$ref-siblings: error

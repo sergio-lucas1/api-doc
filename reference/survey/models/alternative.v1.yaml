@@ -1,0 +1,5 @@
+title: alternative
+type: object
+properties:
+  id:
+    type: string

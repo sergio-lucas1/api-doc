@@ -1,0 +1,17 @@
+title: respondent
+type: object
+properties:
+  uid:
+    type: number
+    description: Id респондента
+  clientId:
+    type: 'null'
+  status:
+    type: number
+  projectId:
+    type: number
+required:
+  - uid
+  - clientId
+  - status
+  - projectId

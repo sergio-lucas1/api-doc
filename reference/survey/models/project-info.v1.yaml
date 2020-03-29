@@ -1,0 +1,21 @@
+title: Project Info
+type: object
+description: Short poject info
+x-tags:
+  - Survey
+x-examples:
+  application/json:
+    projectName: UXReality Project (Recordings)
+    projectId: 238287341
+    resources: []
+    neurolabTrackers: '23'
+properties:
+  projectId:
+    type: number
+  projectName:
+    type: string
+  resources:
+    type: array
+    items: {}
+  neurolabTrackers:
+    type: string
