@@ -2,7 +2,7 @@
 tags: [Survey]
 ---
 
-# Data JSON file example
+# data.json file example
 
 ## [Sync doc](../../../docs/screens/sync.md)
 ```json

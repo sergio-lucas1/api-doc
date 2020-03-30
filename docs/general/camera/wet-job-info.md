@@ -2,7 +2,7 @@
 tags: [Survey]
 ---
 
-# Calibration JSON file example
+# wet-job-info.json file example
 
 ## [Sync doc](../../../docs/screens/sync.md)
 ```json

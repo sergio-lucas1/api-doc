@@ -2,7 +2,7 @@
 tags: [Survey]
 ---
 
-# Tracking JSON file example
+# tracking.json file example
 
 ## [Sync doc](../../../docs/screens/sync.md)
 

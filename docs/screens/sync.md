@@ -25,7 +25,7 @@ tags: [Survey]
 
 ### Calibration data
   - calibration_capture.mp4 - запись камеры в момент прохождения калибровки
-  - [calibration_{create_timestamp}.json](../../examples/data/calibration/calibration.md) - данные по устройству в момент калибровки
+  - [calibration_{create_timestamp}.json](./calibration/calibration-json.md) - данные по устройству в момент калибровки
 
   Request body:
 <!--
@@ -91,7 +91,7 @@ title: Example
 
 ### Screen data
   - capture.mp4 - запись экрана в момент сбора данных
-  - data.json - пока не ясно для чего данный файл. [Структура](../../examples/data/screen/data.md)
+  - data.json - пока не ясно для чего данный файл. [Структура](../general/screen/data.md)
   - index.json - хранит массив с одним элементом типа "string" (["capture.mp4"]) - имя видеофайла
 
 <!-- theme: danger -->
@@ -163,10 +163,10 @@ title: Example
 
 ### Capture data
   - capture.mp4 - запись камеры в момент сбора данных
-  - tracking_{create_timestamp}.json - [данные в момент сбора](../../examples/data/camera/tracking.md)
-  - data.json - [тачи, скролы в вебвью/прототипе](../../examples/data/camera/data.md)
+  - tracking_{create_timestamp}.json - [данные в момент сбора](../general/camera/tracking.md)
+  - data.json - [тачи, скролы в вебвью/прототипе](../general/camera/data.md)
   - index.json - хранит массив с одним элементом типа "string" (["capture.mp4"]) - имя видеофайла
-  - wet-job-info.json - general file -[ хранит ссылки на файлы](../../examples/data/camera/wet-job-info.md)
+  - wet-job-info.json - general file -[ хранит ссылки на файлы](../general/camera/wet-job-info.md)
 
 <!-- theme: danger -->
 > После загрузки файлов **index.json, wet-job-info.json** необходимо [уведомить сервер](#data-uploaded) что файлы доступны для анализа
