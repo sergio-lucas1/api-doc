@@ -258,11 +258,11 @@ paths:
                   enum:
                     - responseData
                 files:
-                  type:
-                    - string
-                    - array
-                  items:
-                    type: string
+                  oneOf:
+                    - type: array
+                      items:
+                        type: string
+                    - type: string
                 ignoreMimeType:
                   type: boolean
                   enum:
