@@ -4,13 +4,18 @@ tags: [Survey]
 
 # Calibration JSON file example
 
+В данном JSON из необходимых полей это:
+"commands", "mode", "screen_size", "window_rect"
+
+- commands - описывает данные по каждой точке(координаты и время в какое она показана на экране относительно времени старта калибровки)
+
 ## [Sync doc](../../../docs/screens/sync.md)
 
 ```json
 {
   "commands": [
     {
-      "type": "set_calibration_data",
+      "type": "set_calibration_data",  - static value
       "value": [ - tracking point position data
         [
           [180, 326.3333435058594],
@@ -24,7 +29,7 @@ tags: [Survey]
     360, - width
     720 - height
   ],
-    "window_rect": {
+  "window_rect": {
     "window_x": 0, - static value
     "window_y": 24, - status bar height
     "window_width": 360, - (Math.ceil(window.width / 2) * 2)
