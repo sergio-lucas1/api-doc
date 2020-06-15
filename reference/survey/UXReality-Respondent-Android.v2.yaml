@@ -11,7 +11,7 @@ servers:
 paths:
   /GetProjectInfo:
     get:
-      summary: GET Project Info
+      summary: GET Project Info(deprecated)
       tags:
         - Survey
       operationId: GET_project_info
@@ -64,7 +64,7 @@ paths:
           description: Если код не валидный
   /GetQuestMetadata:
     get:
-      summary: Get Quest Info
+      summary: Get Quest Info(deprecated)
       tags:
         - Survey
       responses:
@@ -561,7 +561,7 @@ paths:
           description: Уникальный идентификатор устройства
   /CheckRespondentsStatus.ashx:
     post:
-      summary: Check Respondent
+      summary: Check Respondent(deprecated)
       operationId: checkRespondent
       responses:
         '200':
@@ -759,7 +759,7 @@ paths:
     parameters: []
   /GetUploadTokens.ashx:
     post:
-      summary: Get upload endpoint
+      summary: Get upload endpoint(deprecated)
       operationId: getUploadTokens
       responses:
         '200':
@@ -842,7 +842,7 @@ paths:
         - Synchronization
   /DataUploaded.ashx:
     post:
-      summary: Set data uploaded
+      summary: Set data uploaded(deprecated)
       operationId: dataUploaded
       responses:
         '200':
