@@ -664,27 +664,14 @@ paths:
                   type: number
                   description: Respondet id
                 answers:
-                  type: object
-                  required:
-                    - q
-                    - d
-                  properties:
-                    q:
-                      type: number
-                      description: Current question id
-                    d:
-                      type: array
-                      items:
-                        anyOf:
-                          - $ref: '#/components/schemas/Answer_SingleDropdown'
-                          - $ref: '#/components/schemas/Answer_SingleChoice'
-                          - $ref: '#/components/schemas/Answer_MultipleChoice'
-                          - $ref: '#/components/schemas/Answer_Rating'
-                          - $ref: '#/components/schemas/Answer_OpenEnded'
-                        description: Stringify Object
-                    t:
-                      type: number
-                      description: Current answer timestamp
+                  type: array
+                  items:
+                    anyOf:
+                      - $ref: '#/components/schemas/Answer_SingleDropdown'
+                      - $ref: '#/components/schemas/Answer_SingleChoice'
+                      - $ref: '#/components/schemas/Answer_MultipleChoice'
+                      - $ref: '#/components/schemas/Answer_OpenEnded'
+                      - $ref: '#/components/schemas/Answer_Rating'
                 status:
                   type: number
                   enum:
@@ -863,19 +850,16 @@ components:
   schemas:
     Answer_SingleDropdown:
       title: Answer_SingleDropdown
-      type: object
-      properties:
-        a:
-          type: number
-        elapsedMilliseconds:
-          type: number
-        lang:
-          type: number
-      required:
-        - a
-        - elapsedMilliseconds
-        - lang
       description: Simple answer dropdown model
+      allOf:
+        - $ref: '#/components/schemas/AnswerContainer'
+        - type: object
+          properties:
+            d:
+              type: array
+              description: Only one answer for this question type
+              items:
+                $ref: '#/components/schemas/Answer'
     Answer_SingleChoice:
       $ref: '#/components/schemas/Answer_SingleDropdown'
       title: Answer_SingleChoice
@@ -888,37 +872,70 @@ components:
       description: Collection of single choice answers
     Answer_OpenEnded:
       title: Answer_OpenEnded
-      type: object
-      properties:
-        a:
-          type: number
-        t:
-          type: string
-        ellapsedMiliseconds:
-          type: number
-        lang:
-          type: number
+      description: Collection of single choice answers with text
+      allOf:
+        - $ref: '#/components/schemas/AnswerContainer'
+        - type: object
+          properties:
+            d:
+              allOf:
+                - $ref: '#/components/schemas/Answer'
+                - type: object
+                  properties:
+                    t:
+                      type: string
+                      description: Text value
+                  required:
+                    - t
     Answer_Rating:
       title: Answer_Rating
+      description: Smile rating model
+      allOf:
+        - $ref: '#/components/schemas/AnswerContainer'
+        - type: object
+          properties:
+            d:
+              allOf:
+                - $ref: '#/components/schemas/Answer'
+                - type: object
+                  properties:
+                    v:
+                      type: string
+                      description: "Smile number start's from 1"
+                      enum:
+                        - '1'
+                        - '2'
+                        - '3'
+                        - '4'
+                        - '5'
+                      example: '5'
+                  required:
+                    - v
+    Answer:
+      title: Answer
       type: object
       properties:
         a:
           type: number
-        v:
-          type: string
-          example: '5'
-          enum:
-            - '1'
-            - '2'
-            - '3'
-            - '4'
-            - '5'
+          description: Choosen alternative id
         elapsedMilliseconds:
           type: number
+          description: Answer spent time
         lang:
           type: number
+          description: Survey language id
       required:
         - a
-        - v
-        - lang
+    AnswerContainer:
+      title: AnswerContainer
+      type: object
+      properties:
+        q:
+          type: number
+          description: Question id
+        t:
+          type: number
+          description: Answer spent time
+      required:
+        - q
   securitySchemes: {}
