@@ -4,6 +4,8 @@ info:
   version: '2.0'
   contact:
     name: Sergey
+    email: lukjanchuks@gmail.com
+    url: 'https://github.com/sergio-lucas'
   description: Описание когда-то будет
 servers:
   - url: 'https://test3.2futureresearch.com'
