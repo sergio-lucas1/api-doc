@@ -1,0 +1,9 @@
+title: answer-simple_question.v2
+type: object
+properties:
+  a:
+    type: number
+  elapsedMilliseconds:
+    type: integer
+  lang:
+    type: number
