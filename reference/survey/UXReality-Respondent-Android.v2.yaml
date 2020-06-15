@@ -641,8 +641,6 @@ paths:
                   errormessage:
                     type: string
                     description: Error description text
-                  '':
-                    type: string
                 required:
                   - res
               examples:
@@ -687,6 +685,68 @@ paths:
                 - uid
                 - answers
                 - status
+            examples:
+              Single choice:
+                value:
+                  uid: 123456789
+                  answers:
+                    - q: 456789789
+                      t: 121456456456456
+                      d:
+                        - a: 4545646454
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                  status: 1
+                  lastAnsweredQId: 2345689879
+              Multiple choice:
+                value:
+                  uid: 123456789
+                  answers:
+                    - q: 456789789
+                      t: 121456456456456
+                      d:
+                        - a: 4545646454
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                        - a: 65454546546
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                  status: 1
+                  lastAnsweredQId: 2345689879
+              Rating:
+                value:
+                  uid: 123456789
+                  answers:
+                    - q: 456789789
+                      t: 121456456456456
+                      d:
+                        - a: 4545646454
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                          v: '1'
+                        - a: 65454546546
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                          v: '5'
+                  status: 1
+                  lastAnsweredQId: 2345689879
+              Text answer:
+                value:
+                  uid: 123456789
+                  answers:
+                    - q: 456789789
+                      t: 121456456456456
+                      d:
+                        - a: 4545646454
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                          t: text message
+                        - a: 65454546546
+                          elapsedMillisecons: 45454
+                          lang: 11232
+                          t: text message
+                  status: 1
+                  lastAnsweredQId: 2345689879
           application/json:
             schema:
               type: object
